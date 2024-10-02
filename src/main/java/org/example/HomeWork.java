@@ -1,6 +1,6 @@
 package org.example;
 
-import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class HomeWork {
@@ -24,8 +24,21 @@ public class HomeWork {
      * Сигнатуру метода не меняем
      */
     public String findMaxSubstring(String str) {
-        //TODO реализовать метод
-        return null;
+        int size = 1;
+        String res = "";
+        if (str == null) {
+            return res;
+        }
+        for (int i = 0; i < str.length() && i + size <= str.length(); i++) {
+            while (i + size <=str.length() && str.substring(i, i + size).length() == str.substring(i, i + size)
+                    .chars()
+                    .mapToObj(e -> (char) e)
+                    .collect(Collectors.toSet()).size()) {
+                res = str.substring(i, i + size);
+                size++;
+            }
+        }
+        return res;
     }
 
 
@@ -40,7 +53,12 @@ public class HomeWork {
      * @see <a href="https://www.codewars.com/kata/545cedaa9943f7fe7b000048">https://www.codewars.com/kata/545cedaa9943f7fe7b000048</a>
      */
     public boolean check(String sentence){
-        return false;
+        if (sentence == null) {
+            return false;
+        }
+        int letters = sentence.toLowerCase().replaceAll("[^a-z]", "").chars()
+                .mapToObj(e -> (char) e).collect(Collectors.toSet()).size();
+        return letters == 26;
     }
 
 }
